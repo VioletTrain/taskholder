@@ -73,7 +73,7 @@ class Container
     private function resolveSingleton(string $abstract)
     {
         if (!isset($this->resolved[$abstract])) {
-            $this->resolved[$abstract] = $this->build($this->resolved[$abstract]);
+            $this->resolved[$abstract] = $this->build($this->singletons[$abstract]);
         }
 
         return $this->resolved[$abstract];
@@ -88,12 +88,12 @@ class Container
     private function build($concrete)
     {
         if ($concrete instanceof Closure) {
-            return $concrete;
+            return $concrete();
         }
-
         try {
             $reflector = new ReflectionClass($concrete);
         } catch (ReflectionException $e) {
+            echo $concrete;
             throw new BindingException($e->getMessage());
         }
 
