@@ -2,16 +2,17 @@
 
 namespace Framework\Http;
 
+use Framework\Container;
 use Framework\Exception\HttpNotFoundException;
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Throwable;
 
 class FrontController
 {
     private array $routes;
 
-    private ContainerBuilder $container;
+    private Container $container;
 
-    public function __construct(ContainerBuilder $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
         $this->routes = Router::getRoutes();
@@ -20,7 +21,7 @@ class FrontController
     /**
      * @param Request $request
      * @return Response
-     * @throws HttpNotFoundException
+     * @throws Throwable
      */
     public function handle(Request $request): Response
     {
@@ -28,9 +29,7 @@ class FrontController
             throw new HttpNotFoundException($request->getUriWithoutParameters());
         }
 
-        $this->container->register('action', $route);
-
-        $action = $this->container->get('action');
+        $action = $this->container->make($route);
 
         return $action->execute($request);
     }

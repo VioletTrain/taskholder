@@ -3,8 +3,8 @@
 namespace Framework;
 
 use Framework\Exception\Handler;
+use Framework\Http\FrontController;
 use Framework\Http\Request;
-use Symfony\Component\DependencyInjection\Container;
 use Throwable;
 
 class Application
@@ -22,7 +22,7 @@ class Application
         $exceptionHandler = new Handler();
 
         try {
-            $controller = $this->container->get('front_controller');
+            $controller = $this->container->make(FrontController::class);
             $response = $controller->handle($request);
             $response->send();
         } catch (Throwable $e) {

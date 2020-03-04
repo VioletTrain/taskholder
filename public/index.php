@@ -9,9 +9,7 @@ try {
     $container = require_once '../bootstrap/container.php';
     $app = new Framework\Application($container);
 
-    $container->set('application', $app);
-
     $app->start();
 } catch (Throwable $e) {
-    echo $e->getMessage() . "\n<br>" . $e->getTraceAsString();
+    echo $e->getMessage() . "\n" . $e->getTraceAsString() . "\n";
 }
