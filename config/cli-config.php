@@ -13,9 +13,9 @@ $dbParams = [
     'host'     => 'localhost',
     'port'     => '54320',
     'driver'   => 'pdo_pgsql',
-    'user'     => 'algorithms_user',
+    'user'     => 'taskholder_user',
     'password' => 'postgres1234',
-    'dbname'   => 'algorithms_db'
+    'dbname'   => 'taskholder_db'
 ];
 
 $connection = \Doctrine\DBAL\DriverManager::getConnection($dbParams);
