@@ -3,6 +3,7 @@
 namespace Framework\Http;
 
 use Taskholder\Http\CreateTaskAction;
+use Taskholder\Http\GetTasksAction;
 
 class Router
 {
@@ -10,6 +11,7 @@ class Router
     {
         return [
             static::post('/task', CreateTaskAction::class),
+            static::get('/tasks', GetTasksAction::class),
         ];
     }
 
