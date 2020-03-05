@@ -13,7 +13,7 @@ class ImageBoundary
      * @param string $image
      * @throws BoundaryException
      */
-    public function __construct(string $image)
+    public function __construct($image)
     {
         if (!$this->validate($image)) {
             throw new BoundaryException();
@@ -22,7 +22,7 @@ class ImageBoundary
         $this->image = $image;
     }
 
-    private function validate(string $image)
+    private function validate($image)
     {
         return true;
     }

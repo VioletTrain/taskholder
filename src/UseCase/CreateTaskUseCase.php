@@ -3,7 +3,7 @@
 namespace Taskholder\UseCase;
 
 use Framework\Contract\EntityManager;
-use Framework\Exception\ApplicationException;
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Taskholder\Boundary\EmailBoundary;
 use Taskholder\Boundary\ImageBoundary;
 use Taskholder\Boundary\UsernameBoundary;
@@ -22,21 +22,18 @@ class CreateTaskUseCase
     }
 
     /**
-     * @param string $username
-     * @param string $email
-     * @param string $content
-     * @param $image
+     * @param ParameterBag $properties
      * @return Task
-     * @throws ApplicationException
+     * @throws \Taskholder\Exception\BoundaryException
      */
-    public function createTask(string $username, string $email, string $content, $image): Task
+    public function createTask(ParameterBag $properties): Task
     {
-        $imgPath = $this->imageHandler->upload($image);
+        $imgPath = $this->imageHandler->upload($properties->get('image'));
 
         $task = new Task(
-            new UsernameBoundary($username),
-            new EmailBoundary($email),
-            $content,
+            new UsernameBoundary($properties->get('username')),
+            new EmailBoundary($properties->get('email')),
+            $properties->get('content'),
             new ImageBoundary($imgPath)
         );
 

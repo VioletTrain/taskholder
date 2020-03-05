@@ -13,7 +13,7 @@ class EmailBoundary
      * @param string $email
      * @throws BoundaryException
      */
-    public function __construct(string $email)
+    public function __construct($email)
     {
         if (!$this->validate($email)) {
             throw new BoundaryException("'$email' is not a valid email.");
@@ -22,7 +22,7 @@ class EmailBoundary
         $this->email = $email;
     }
 
-    private function validate(string $email): bool
+    private function validate($email): bool
     {
         return preg_match('/^[a-zA-Z0-9\-_]+@[a-zA-Z0-9\-_]+\.[a-zA-Z0-9\-_]+$/', $email);
     }

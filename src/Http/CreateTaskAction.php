@@ -20,12 +20,7 @@ class CreateTaskAction implements Action
     public function execute(Request $request): Response
     {
         try {
-            $task = $this->useCase->createTask(
-                $request->post('username') ?? '',
-                $request->post('email') ?? '',
-                $request->post('content') ?? '',
-                $request->post('image') ?? ''
-            );
+            $task = $this->useCase->createTask($request->all());
         } catch (ApplicationException $e) {
             return new Response($e->getMessage(), $e->getCode());
         }

@@ -13,7 +13,7 @@ class UsernameBoundary
      * @param string $username
      * @throws BoundaryException
      */
-    public function __construct(string $username)
+    public function __construct($username)
     {
         if (!$this->validate($username)) {
             throw new BoundaryException("'$username' is not a valid username");
@@ -22,7 +22,7 @@ class UsernameBoundary
         $this->username = $username;
     }
 
-    private function validate(string $username)
+    private function validate($username)
     {
         return preg_match('/^[a-zA-Z0-9\-_]{3,}$/', $username);
     }

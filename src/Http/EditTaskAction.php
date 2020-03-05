@@ -6,8 +6,6 @@ use Framework\Action;
 use Framework\Authenticator;
 use Framework\Http\Request;
 use Framework\Http\Response;
-use Taskholder\Boundary\BoolBoundary;
-use Taskholder\Boundary\StringBoundary;
 use Taskholder\UseCase\EditTaskUseCase;
 
 class EditTaskAction implements Action
