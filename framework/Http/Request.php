@@ -2,6 +2,7 @@
 
 namespace Framework\Http;
 
+use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 
 class Request extends SymfonyRequest
@@ -70,5 +71,10 @@ class Request extends SymfonyRequest
         }
 
         return $result ?? $default;
+    }
+
+    public function all(): ParameterBag
+    {
+        return new ParameterBag(array_merge($this->getParameters(), json_decode(file_get_contents('php://input'), true)));
     }
 }

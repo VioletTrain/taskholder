@@ -5,8 +5,10 @@ namespace Taskholder\Entity;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
+use Taskholder\Boundary\BoolBoundary;
 use Taskholder\Boundary\EmailBoundary;
 use Taskholder\Boundary\ImageBoundary;
+use Taskholder\Boundary\StringBoundary;
 use Taskholder\Boundary\UsernameBoundary;
 
 /**
@@ -40,6 +42,20 @@ class Task extends BaseEntity
         $this->imgPath = $image->__toString();
     }
 
+    public function setContent(StringBoundary $content): self
+    {
+        $this->content = $content->getString();
+
+        return $this;
+    }
+
+    public function setCompleted(BoolBoundary $completed): self
+    {
+        $this->completed = $completed->getBool();
+
+        return $this;
+    }
+
     public static function orderable(): array
     {
         return [
@@ -52,6 +68,7 @@ class Task extends BaseEntity
     public function jsonSerialize()
     {
         return [
+            'id'        => $this->id,
             'username'  => $this->username,
             'email'     => $this->email,
             'content'   => $this->content,
