@@ -27,6 +27,9 @@ class Task extends BaseEntity
     /** @Column(type="string")  */
     private $imgPath;
 
+    /** @Column(type="boolean")  */
+    private $completed = false;
+
     public function __construct(UsernameBoundary $username, EmailBoundary $email, string $content, ImageBoundary $image)
     {
         parent::__construct();
@@ -37,6 +40,15 @@ class Task extends BaseEntity
         $this->imgPath = $image->__toString();
     }
 
+    public static function orderable(): array
+    {
+        return [
+            'username',
+            'email',
+            'content'
+        ];
+    }
+
     public function jsonSerialize()
     {
         return [
@@ -44,6 +56,7 @@ class Task extends BaseEntity
             'email'     => $this->email,
             'content'   => $this->content,
             'imgpath'   => $this->imgPath,
+            'completed' => $this->completed
         ];
     }
 
