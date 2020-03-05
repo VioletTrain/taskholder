@@ -15,8 +15,8 @@ class Handler
     private function render(Throwable $e)
     {
         $response = $e instanceof ApplicationException
-            ? new Response($e->getMessage(), $e->getCode())
-            : new Response($e->getMessage() . "\n<br>" . $e->getTraceAsString(), 500);
+            ? new Response(['error' => $e->getMessage()], $e->getCode())
+            : new Response(['error' => $e->getMessage() . "\n<br>" . $e->getTraceAsString()], 500);
 
         $response->send();
     }

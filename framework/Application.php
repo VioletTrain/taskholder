@@ -18,6 +18,7 @@ class Application
 
     public function start()
     {
+        session_start();
         $request = Request::createInstance();
         $exceptionHandler = new Handler();
 
