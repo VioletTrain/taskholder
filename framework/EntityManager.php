@@ -63,4 +63,19 @@ class EntityManager implements Contract\EntityManager
             'current_page'  => $currentPage
         ];
     }
+
+    public function find(string $class, int $id)
+    {
+        return $this->entityManager->find($class, $id);
+    }
+
+    public function findBy(string $class, array $criteria): array
+    {
+        return $this->entityManager->getRepository($class)->findBy($criteria);
+    }
+
+    public function findOneBy(string $class, array $criteria)
+    {
+        return $this->entityManager->getRepository($class)->findOneBy($criteria);
+    }
 }

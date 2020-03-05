@@ -15,4 +15,10 @@ interface EntityManager
     public function orderBy($sort, $order = null): self;
 
     public function paginate(int $perPage, int $currentPage): array;
+
+    public function find(string $class, int $id);
+
+    public function findBy(string $class, array $criteria);
+
+    public function findOneBy(string $class, array $criteria);
 }
