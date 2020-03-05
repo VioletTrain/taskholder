@@ -4,6 +4,8 @@ use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Tools\Setup;
 use Framework\Container;
+use Framework\Contract\EntityManager as CustomEntityManagerInterface;
+use Framework\EntityManager as CustomEntityManager;
 
 $container = new Container();
 
@@ -14,5 +16,6 @@ $container->singleton(EntityManagerInterface::class, function () {
 
     return EntityManager::create($config['db_params'], $doctrineConfig);
 });
+$container->singleton(CustomEntityManagerInterface::class, CustomEntityManager::class);
 
 return $container;

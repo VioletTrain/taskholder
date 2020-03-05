@@ -2,7 +2,7 @@
 
 namespace Taskholder\UseCase;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Framework\Contract\EntityManager;
 use Framework\Exception\ApplicationException;
 use Taskholder\Boundary\EmailBoundary;
 use Taskholder\Boundary\ImageBoundary;
@@ -13,9 +13,9 @@ use Taskholder\ImageHandler;
 class CreateTaskUseCase
 {
     private ImageHandler $imageHandler;
-    private EntityManagerInterface $em;
+    private EntityManager $em;
 
-    public function __construct(ImageHandler $imageHandler, EntityManagerInterface $em)
+    public function __construct(ImageHandler $imageHandler, EntityManager $em)
     {
         $this->imageHandler = $imageHandler;
         $this->em = $em;
