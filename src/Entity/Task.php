@@ -7,7 +7,6 @@ use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Table;
 use Taskholder\Boundary\BoolBoundary;
 use Taskholder\Boundary\EmailBoundary;
-use Taskholder\Boundary\ImageBoundary;
 use Taskholder\Boundary\StringBoundary;
 use Taskholder\Boundary\UsernameBoundary;
 
@@ -32,14 +31,14 @@ class Task extends BaseEntity
     /** @Column(type="boolean")  */
     private $completed = false;
 
-    public function __construct(UsernameBoundary $username, EmailBoundary $email, string $content, ImageBoundary $image)
+    public function __construct(UsernameBoundary $username, EmailBoundary $email, string $content, string $imgPath)
     {
         parent::__construct();
 
         $this->username = $username->__toString();
         $this->email = $email->__toString();
         $this->content = $content;
-        $this->imgPath = $image->__toString();
+        $this->imgPath = $imgPath;
     }
 
     public function setContent(StringBoundary $content): self

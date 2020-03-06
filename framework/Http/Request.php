@@ -75,6 +75,12 @@ class Request extends SymfonyRequest
 
     public function all(): ParameterBag
     {
-        return new ParameterBag(array_merge($this->getParameters(), json_decode(file_get_contents('php://input'), true)));
+        $jsonInput = json_decode(file_get_contents('php://input'), true) ?? [];
+
+        $all = array_merge_recursive(
+            $this->getParameters(), $jsonInput, $_POST, $_FILES
+        ) ?? [];
+
+        return new ParameterBag($all);
     }
 }

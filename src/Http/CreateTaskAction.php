@@ -3,7 +3,6 @@
 namespace Taskholder\Http;
 
 use Framework\Action;
-use Framework\Exception\ApplicationException;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Taskholder\UseCase\CreateTaskUseCase;
@@ -19,11 +18,7 @@ class CreateTaskAction implements Action
 
     public function execute(Request $request): Response
     {
-        try {
-            $task = $this->useCase->createTask($request->all());
-        } catch (ApplicationException $e) {
-            return new Response($e->getMessage(), $e->getCode());
-        }
+        $task = $this->useCase->createTask($request->all());
 
         return new Response([
             'task' => $task
