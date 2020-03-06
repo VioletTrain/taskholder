@@ -1,6 +1,7 @@
 {
     "require": {
         "ext-json": "*",
+        "ext-gd": "*",
         "symfony/http-foundation": "^5.0",
         "doctrine/orm": "^2.7",
         "doctrine/migrations": "^2.2"
