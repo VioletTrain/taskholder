@@ -12,13 +12,20 @@ class Image
 
     private string $tmp_name;
 
-    private string $error;
-
     private string $size;
 
     private int $width;
 
     private int $height;
+
+    private string $path;
+
+    public const SUPPORTED_FORMATS = [
+        'jpg',
+        'jpeg',
+        'png',
+        'gif'
+    ];
 
     /**
      * Image constructor.
@@ -27,17 +34,21 @@ class Image
      */
     public function __construct(array $image)
     {
+        $error = $image['error'];
         $type = explode('.', substr($image['name'], -5))[1] ?? '';
-        $this->error = $image['error'];
 
-        if ($this->error > 0) {
-            throw new FileUploadException($this->error);
+        if ($error > 0) {
+            throw new FileUploadException($error);
         }
 
-        $this->name = $image['name'];
+        if (!in_array($type, self::SUPPORTED_FORMATS)) {
+            throw new FileUploadException($error);
+        }
+
+        $this->name = $image['name'] ?? '';
         $this->type = $type;
-        $this->tmp_name = $image['tmp_name'];
-        $this->size = $image['size'];
+        $this->tmp_name = $image['tmp_name'] ?? '';
+        $this->size = $image['size'] ?? 0;
         list($this->width, $this->height) = getimagesize($this->tmp_name);
     }
 
@@ -46,9 +57,11 @@ class Image
         return $this->name;
     }
 
-    public function setName(string $name): void
+    public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
     }
 
     public function getType(): string
@@ -59,16 +72,6 @@ class Image
     public function getTmpName(): string
     {
         return $this->tmp_name;
-    }
-
-    public function getError(): string
-    {
-        return $this->error;
-    }
-
-    public function getSize(): int
-    {
-        return $this->size;
     }
 
     public function getWidth(): int
@@ -91,8 +94,15 @@ class Image
         return 240;
     }
 
-    public function fits(): bool
+    public function getPath(): string
     {
-        return $this->getWidth() <= $this->maxWidth() && $this->getHeight() <= $this->maxHeight();
+        return $this->path;
+    }
+
+    public function setPath(string $path): self
+    {
+        $this->path = $path;
+
+        return $this;
     }
 }
