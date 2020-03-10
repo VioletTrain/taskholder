@@ -4,12 +4,12 @@ namespace Taskholder\UseCase;
 
 use Framework\Contract\EntityManager;
 use Framework\Exception\ApplicationException;
+use Framework\Library\Image\ImageHandler;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Taskholder\Boundary\EmailBoundary;
 use Taskholder\Boundary\UsernameBoundary;
 use Taskholder\Entity\Task;
 use Taskholder\Image;
-use Taskholder\ImageHandler;
 
 class CreateTaskUseCase
 {
@@ -29,13 +29,14 @@ class CreateTaskUseCase
      */
     public function createTask(ParameterBag $properties): Task
     {
-        $imgName = $this->imageHandler->upload(new Image($properties->get('image')));
+        $image = new Image($properties->get('image'));
+        $this->imageHandler->upload($image);
 
         $task = new Task(
             new UsernameBoundary($properties->get('username')),
             new EmailBoundary($properties->get('email')),
             $properties->get('content'),
-            $imgName
+            $image->getName()
         );
 
         $this->em->persist($task);
