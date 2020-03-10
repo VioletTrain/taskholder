@@ -42,21 +42,37 @@ class Container
 
     /**
      * @param string $class
+     * @param $parameters
+     * @return mixed
+     * @throws BindingException
+     */
+    public function make(string $class, $parameters = [])
+    {
+        try {
+            return $this->resolve($class, $parameters);
+        } catch (ReflectionException $e) {
+            throw new BindingException($e->getMessage(), $e->getCode());
+        }
+    }
+
+    /**
+     * @param string $class
+     * @param $parameters
      * @return mixed
      * @throws BindingException
      * @throws ReflectionException
      */
-    public function make(string $class)
+    private function resolve(string $class, $parameters = [])
     {
         if ($this->isSingleton($class)) {
-            return $this->resolveSingleton($class);
+            return $this->resolveSingleton($class, $parameters);
         }
 
         if (!isset($this->bindings[$class])) {
-            return $this->build($class);
+            return $this->build($class, $parameters);
         }
 
-        return $this->build($this->bindings[$class]);
+        return $this->build($this->bindings[$class], $parameters);
     }
 
     private function isSingleton(string $abstract): bool
@@ -66,14 +82,15 @@ class Container
 
     /**
      * @param string $abstract
+     * @param $parameters
      * @return mixed
      * @throws BindingException
      * @throws ReflectionException
      */
-    private function resolveSingleton(string $abstract)
+    private function resolveSingleton(string $abstract, $parameters = [])
     {
         if (!isset($this->resolved[$abstract])) {
-            $this->resolved[$abstract] = $this->build($this->singletons[$abstract]);
+            $this->resolved[$abstract] = $this->build($this->singletons[$abstract], $parameters);
         }
 
         return $this->resolved[$abstract];
@@ -81,19 +98,19 @@ class Container
 
     /**
      * @param $concrete
+     * @param $parameters
      * @return mixed
      * @throws BindingException
      * @throws ReflectionException
      */
-    private function build($concrete)
+    private function build($concrete, $parameters = [])
     {
         if ($concrete instanceof Closure) {
-            return $concrete();
+            return $concrete($parameters);
         }
         try {
             $reflector = new ReflectionClass($concrete);
         } catch (ReflectionException $e) {
-            echo $concrete;
             throw new BindingException($e->getMessage());
         }
 
@@ -107,8 +124,8 @@ class Container
             return new $concrete();
         }
 
-        $parameters = $constructor->getParameters();
-        $instances = $this->resolveDependencies($parameters);
+        $dependencies = $constructor->getParameters();
+        $instances = $this->resolveDependencies($dependencies);
 
         return $reflector->newInstanceArgs($instances);
     }
