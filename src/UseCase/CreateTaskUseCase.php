@@ -3,6 +3,7 @@
 namespace Taskholder\UseCase;
 
 use Framework\Contract\EntityManager;
+use Framework\Exception\ApplicationException;
 use Symfony\Component\HttpFoundation\ParameterBag;
 use Taskholder\Boundary\EmailBoundary;
 use Taskholder\Boundary\UsernameBoundary;
@@ -24,7 +25,7 @@ class CreateTaskUseCase
     /**
      * @param ParameterBag $properties
      * @return Task
-     * @throws \Taskholder\Exception\BoundaryException
+     * @throws ApplicationException
      */
     public function createTask(ParameterBag $properties): Task
     {
