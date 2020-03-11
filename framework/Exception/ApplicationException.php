@@ -2,8 +2,9 @@
 
 namespace Framework\Exception;
 
+use Throwable;
 
-interface ApplicationException
+interface ApplicationException extends Throwable
 {
 
 }

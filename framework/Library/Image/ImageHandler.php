@@ -2,7 +2,6 @@
 
 namespace Framework\Library\Image;
 
-use Taskholder\Exception\BoundaryException;
 use Taskholder\Image;
 
 class ImageHandler
@@ -16,7 +15,6 @@ class ImageHandler
 
     /**
      * @param Image $image
-     * @throws BoundaryException
      */
     public function upload(Image $image)
     {
