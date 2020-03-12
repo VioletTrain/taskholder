@@ -1,0 +1,38 @@
+.content {
+  padding: 5px 5px;
+}
+
+#inputs {
+  padding: 5px;
+  visibility: hidden;
+}
+
+#submit {
+  margin-top: 5px;
+}
+
+#tasks {
+  margin: 6% auto;
+  padding: 10px 10px;
+}
+
+.done {
+  float: right;
+}
+
+.pagination-links {
+  text-align: center;
+}
+
+.pagination-link {
+  text-align: center;
+  vertical-align: middle;
+  margin-top: -1px;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+}
+
+.current_page {
+  background-color: #7abaff;
+}

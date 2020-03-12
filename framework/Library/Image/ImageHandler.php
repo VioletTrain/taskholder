@@ -13,13 +13,10 @@ class ImageHandler
         $this->factory = $factory;
     }
 
-    /**
-     * @param Image $image
-     */
-    public function upload(Image $image)
+    public function upload(Image $image): Image
     {
         $uploader = $this->factory->make($image->getType());
 
-        $uploader->upload($image);
+        return $uploader->upload($image);
     }
 }

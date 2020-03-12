@@ -41,6 +41,32 @@ class Task extends BaseEntity
         $this->imgPath = $imgPath;
     }
 
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function getContent(): string
+    {
+        return $this->content;
+    }
+
+    public function getImgPath(): string
+    {
+        return $this->imgPath;
+    }
+
+    public function isCompleted(): bool
+    {
+        return $this->completed;
+    }
+
+
     public function setContent(StringBoundary $content): self
     {
         $this->content = $content->getString();
@@ -60,7 +86,8 @@ class Task extends BaseEntity
         return [
             'username',
             'email',
-            'content'
+            'completed',
+            'created_at'
         ];
     }
 

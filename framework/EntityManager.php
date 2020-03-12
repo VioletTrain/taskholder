@@ -56,11 +56,12 @@ class EntityManager implements Contract\EntityManager
 
         $paginator = new Paginator($query);
         $total = count($paginator);
+        $totalPages = ceil($total / $perPage);
 
         return [
             'data'          => $paginator->getQuery()->execute(),
-            'total'         => $total,
-            'current_page'  => $currentPage
+            'current_page'  => $currentPage,
+            'total_pages'   => $totalPages,
         ];
     }
 

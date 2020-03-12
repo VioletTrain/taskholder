@@ -5,6 +5,7 @@ namespace Framework\Http;
 use Taskholder\Http\CreateTaskAction;
 use Taskholder\Http\EditTaskAction;
 use Taskholder\Http\GetTasksAction;
+use Taskholder\Http\IndexAction;
 use Taskholder\Http\LoginAction;
 
 class Router
@@ -12,6 +13,7 @@ class Router
     public static function getRoutes(): array
     {
         return [
+            static::get('/', IndexAction::class),
             static::post('/task', CreateTaskAction::class),
             static::put('/task', EditTaskAction::class),
             static::get('/tasks', GetTasksAction::class),

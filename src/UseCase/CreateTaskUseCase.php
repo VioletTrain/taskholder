@@ -29,14 +29,16 @@ class CreateTaskUseCase
      */
     public function createTask(ParameterBag $properties): Task
     {
-        $image = new Image($properties->get('image'));
-        $this->imageHandler->upload($image);
+        if ($imageData = $properties->get('image')) {
+            $image = new Image($imageData);
+            $imgName = $this->imageHandler->upload($image)->getName();
+        }
 
         $task = new Task(
             new UsernameBoundary($properties->get('username')),
             new EmailBoundary($properties->get('email')),
             $properties->get('content'),
-            $image->getName()
+            $imgName ?? ''
         );
 
         $this->em->persist($task);
