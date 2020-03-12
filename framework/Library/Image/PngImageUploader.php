@@ -12,7 +12,7 @@ class PngImageUploader extends BaseImageUploader
 
         $imgResource = imagecreatefrompng($image->getPath());
 
-        $imgScaled = imagescale($imgResource, $image->maxWidth(), $image->maxHeight());
+        $imgScaled = $this->scale($imgResource, $image->getWidth(), $image->getHeight());
 
         imagepng($imgScaled, $image->getPath());
     }

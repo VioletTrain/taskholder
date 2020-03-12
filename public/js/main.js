@@ -32,7 +32,7 @@ function enableSubmitButton() {
     request.open('POST', '/task', true);
 
     request.onreadystatechange = function () {
-        console.log(request.responseText);
+      console.log(request.responseText);
     };
 
     request.send(data);

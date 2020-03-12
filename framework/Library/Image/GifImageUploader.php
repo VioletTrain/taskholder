@@ -12,7 +12,7 @@ class GifImageUploader extends BaseImageUploader
 
         $imgResource = imagecreatefromgif($image->getPath());
 
-        $imgScaled = imagescale($imgResource, $image->maxWidth(), $image->maxHeight());
+        $imgScaled = $this->scale($imgResource, $image->getWidth(), $image->getHeight());
 
         imagegif($imgScaled, $image->getPath());
     }

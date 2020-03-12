@@ -45,8 +45,23 @@ abstract class BaseImageUploader implements ImageUploader
 
     protected function maxHeight(): int
     {
-        return 240;
+        return 320;
     }
 
     abstract protected function resize(Image $image);
+
+    final protected function scale($imgResource, int $oldWidth, int $oldHeight)
+    {
+        $ratio = $oldWidth / $oldHeight;
+
+        if ($oldWidth > $oldHeight) {
+            $newWidth = $this->maxWidth();
+            $newHeight = floor($newWidth / $ratio);
+        } else {
+            $newHeight = $this->maxHeight();
+            $newWidth = floor($newHeight * $ratio);
+        }
+
+        return imagescale($imgResource, $newWidth, $newHeight);
+    }
 }

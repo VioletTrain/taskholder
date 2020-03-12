@@ -12,8 +12,8 @@ class JpgImageUploader extends BaseImageUploader
 
         $imgResource = imagecreatefromjpeg($image->getPath());
 
-        $imgScaled = imagescale($imgResource, $image->maxWidth(), $image->maxHeight());
+        $imgScaled = $this->scale($imgResource, $image->getWidth(), $image->getHeight());
 
-        var_dump(imagejpeg($imgScaled, $image->getPath()));
+        imagejpeg($imgScaled, $image->getPath());
     }
 }

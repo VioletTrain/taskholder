@@ -49,6 +49,7 @@ class Image
         $this->type = $type;
         $this->tmp_name = $image['tmp_name'] ?? '';
         $this->size = $image['size'] ?? 0;
+        var_dump(getimagesize($this->tmp_name));
         list($this->width, $this->height) = getimagesize($this->tmp_name);
     }
 
@@ -82,16 +83,6 @@ class Image
     public function getHeight(): int
     {
         return $this->height;
-    }
-
-    public function maxWidth(): int
-    {
-        return 320;
-    }
-
-    public function maxHeight(): int
-    {
-        return 240;
     }
 
     public function getPath(): string

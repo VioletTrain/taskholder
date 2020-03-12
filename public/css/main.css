@@ -12,8 +12,13 @@
 }
 
 #tasks {
-  margin: 6% auto;
+  margin-top: 6%;
   padding: 10px 10px;
+}
+
+.image {
+  display: block;
+  margin: auto auto;
 }
 
 .done {
@@ -22,6 +27,7 @@
 
 .pagination-links {
   text-align: center;
+  margin-top: auto;
 }
 
 .pagination-link {

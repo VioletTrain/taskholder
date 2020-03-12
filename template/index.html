@@ -47,7 +47,7 @@
                         <p>Email: {{ task.getEmail() }}</p>
                         <p>Content: {{ task.getContent() }}</p>
                         {% if task.getImgPath() != '' %}
-                            <img src="/storage/img/{{ task.getImgPath() }}" alt="task-image">
+                            <img class="image" src="/storage/img/{{ task.getImgPath() }}" alt="task-image">
                         {% endif %}
                     </div>
                 {% endfor %}
