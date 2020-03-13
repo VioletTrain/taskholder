@@ -1,18 +1,12 @@
+import { getInputData } from "./input_data.js";
+import { newTaskHtml } from "./new_task_html.js";
+
 export function enableSubmitButton() {
   let submitButton = document.getElementById('submit');
 
   submitButton.addEventListener('click', function () {
-    let data = new FormData();
+    let data = getInputData();
     let request = new XMLHttpRequest();
-    let image = document.getElementById('input-image').files[0] ?? null;
-
-    Array.from(document.getElementsByClassName('input')).map(function (input) {
-      data.append(input.id.replace('input-', ''), input.value);
-    });
-
-    if (image) {
-      data.append('image', image);
-    }
 
     request.open('POST', '/task', true);
     request.send(data);
@@ -23,7 +17,12 @@ export function enableSubmitButton() {
       if (typeof response.error != 'undefined') {
         alert(response.error);
       } else if (typeof response.task != 'undefined') {
+        if (typeof response.task.imgpath !== 'undefined' && response.task.imgpath !== '') {
+          response.task.imgpath = '/storage/img/' + response.task.imgpath;
+        }
+
         appendTask(response.task);
+        alert('Successfully created task.')
       } else {
         alert('Server error. Try again.');
       }
@@ -33,21 +32,17 @@ export function enableSubmitButton() {
 
 function appendTask(task) {
   let tasks = document.getElementById('tasks');
-  let newTaskNode = tasks.children.item(0).cloneNode();
+  let preview = document.getElementById('preview');
+  let newTaskNode = document.createElement('div');
 
-  newTaskNode.innerHTML = '<p>Username: <span class="username">' + task.username + '</span>';
+  newTaskNode.className = 'col-md-4 task';
+  newTaskNode.innerHTML = newTaskHtml(task);
 
-  if (task.completed) {
-    newTaskNode.innerHTML += '<span class="done">✅ DONE</span>';
+  if (preview){
+    tasks.removeChild(preview);
+  } else {
+    tasks.removeChild(tasks.lastElementChild);
   }
 
-  newTaskNode.innerHTML += '</p><p>Email: <span class="email">' + task.email + '</span></p>'
-    + '<p>Content: <span class="content">' + task.content + '</span></p>';
-
-  if (task.imgpath !== '') {
-    newTaskNode.innerHTML += '<img class="image" src="/storage/img/' + task.imgpath + '" alt="task-image">'
-  }
-
-  tasks.removeChild(tasks.lastElementChild);
   tasks.prepend(newTaskNode);
 }
