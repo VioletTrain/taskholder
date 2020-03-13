@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/main.css">
-    <script src="/public/js/main.js"></script>
+    <script src="/public/js/main.js" type="module"></script>
     <title>Title</title>
 </head>
 <body>
@@ -38,14 +38,14 @@
             </p>
             <div class="row" id="tasks">
                 {% for task in tasks.data %}
-                    <div class="col-md-4">
-                        <p>Username: {{ task.getUsername() }}
+                    <div class="col-md-4 task">
+                        <p>Username: <span class="username">{{ task.getUsername() }}</span>
                             {% if task.isCompleted() %}
                                 <span class="done">✅ DONE</span>
                             {% endif %}
                         </p>
-                        <p>Email: {{ task.getEmail() }}</p>
-                        <p>Content: {{ task.getContent() }}</p>
+                        <p>Email: <span class="email">{{ task.getEmail() }}</span></p>
+                        <p>Content: <span class="content">{{ task.getContent() }}</span></p>
                         {% if task.getImgPath() != '' %}
                             <img class="image" src="/storage/img/{{ task.getImgPath() }}" alt="task-image">
                         {% endif %}
