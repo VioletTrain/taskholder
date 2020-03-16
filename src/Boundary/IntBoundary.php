@@ -16,7 +16,7 @@ class IntBoundary
     public function __construct($integer)
     {
         if ($integer !== 0 && (!$integer || $integer && !is_numeric($integer))) {
-            throw new BoundaryException("$integer must be numeric");
+            throw new BoundaryException("'$integer' must be numeric");
         }
 
         $this->integer = (int) $integer;

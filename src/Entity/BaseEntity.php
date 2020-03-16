@@ -40,4 +40,9 @@ abstract class BaseEntity implements JsonSerializable
     {
         return $this->created_at->format('H:i:s Y-m-d');
     }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }

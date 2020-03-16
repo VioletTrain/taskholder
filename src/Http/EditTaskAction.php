@@ -4,6 +4,7 @@ namespace Taskholder\Http;
 
 use Framework\Action;
 use Framework\Authenticator;
+use Framework\Contract\Authenticatable;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Taskholder\UseCase\EditTaskUseCase;
@@ -11,6 +12,7 @@ use Taskholder\UseCase\EditTaskUseCase;
 class EditTaskAction implements Action
 {
     private EditTaskUseCase $useCase;
+    private Authenticatable $admin;
 
     /**
      * EditTaskAction constructor.
@@ -21,13 +23,14 @@ class EditTaskAction implements Action
     public function __construct(EditTaskUseCase $useCase, Authenticator $authenticator)
     {
         $this->useCase = $useCase;
-        $authenticator->user();
+        $this->admin = $authenticator->user();
     }
 
     public function execute(Request $request): Response
     {
         return new Response([
-            'task' => $this->useCase->editTask($request->all())
+            'task' => $this->useCase->editTask($request->all()),
+            'admin' => $this->admin,
         ]);
     }
 }
