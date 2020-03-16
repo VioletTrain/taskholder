@@ -12,7 +12,7 @@ function enableLoginForm() {
       data.append(input.id.replace('input-', ''), input.value);
     });
 
-    request.open('POST', '/admin/login', false);
+    request.open('POST', '/admin/login', true);
     request.send(data);
 
     request.onload = function () {
