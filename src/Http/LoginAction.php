@@ -19,8 +19,11 @@ class LoginAction implements Action
 
     public function execute(Request $request): Response
     {
+        $login = (string) $request->post('login') ?? '';
+        $password = (string) $request->post('password') ?? '';
+
         $admin = $this->authenticator->setSubject(Admin::class)
-            ->attempt($request->post('login'), $request->post('password'));
+            ->attempt($login, $password);
 
         return new Response([
             'admin' => $admin

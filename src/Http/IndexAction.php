@@ -3,6 +3,7 @@
 namespace Taskholder\Http;
 
 use Framework\Action;
+use Framework\Authenticator;
 use Framework\Http\Request;
 use Framework\Http\Response;
 use Taskholder\Boundary\TaskSortBoundary;
@@ -15,10 +16,13 @@ class IndexAction implements Action
 
     private GetTasksUseCase $useCase;
 
-    public function __construct(Environment $twig, GetTasksUseCase $useCase)
+    private Authenticator $authenticator;
+
+    public function __construct(Environment $twig, GetTasksUseCase $useCase, Authenticator $authenticator)
     {
         $this->twig = $twig;
         $this->useCase = $useCase;
+        $this->authenticator = $authenticator;
     }
 
     public function execute(Request $request): Response
@@ -30,7 +34,8 @@ class IndexAction implements Action
         $tasks = $this->useCase->getTasks(new TaskSortBoundary($sort, $order), $currentPage);
 
         return new Response($this->twig->render('index.html', [
-            'tasks' => $tasks
+            'tasks' => $tasks,
+            'authorized' => $this->authenticator->authorized()
         ]));
     }
 }

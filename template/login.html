@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/public/css/main.css">
+    <script src="/public/js/login/login.js"></script>
+    <title>Taskholder</title>
+</head>
+<body>
+<div class="container-fluid">
+    <form action="/admin/login" method="POST">
+        <div class="row">
+            <label for="input-login">Login</label>
+            <input class="input" id="input-login" name="login">
+        </div>
+        <br/>
+        <div class="row">
+            <label for="input-password">Password</label>
+            <input class="input" id="input-password" name="password" type="password">
+        </div>
+        <br/>
+        <input type="button" id="login-submit" value="Login">
+    </form>
+</div>
+</body>
+</html>

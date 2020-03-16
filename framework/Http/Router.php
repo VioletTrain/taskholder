@@ -4,9 +4,9 @@ namespace Framework\Http;
 
 use Taskholder\Http\CreateTaskAction;
 use Taskholder\Http\EditTaskAction;
-use Taskholder\Http\GetTasksAction;
 use Taskholder\Http\IndexAction;
 use Taskholder\Http\LoginAction;
+use Taskholder\Http\LoginFormAction;
 
 class Router
 {
@@ -14,10 +14,10 @@ class Router
     {
         return [
             static::get('/', IndexAction::class),
+            static::get('/admin/login', LoginFormAction::class),
+            static::post('/admin/login', LoginAction::class),
             static::post('/task', CreateTaskAction::class),
             static::put('/task', EditTaskAction::class),
-            static::get('/tasks', GetTasksAction::class),
-            static::post('/login', LoginAction::class),
         ];
     }
 

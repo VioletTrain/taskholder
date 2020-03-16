@@ -61,4 +61,9 @@ class Authenticator
 
         return unserialize($_SESSION['user']);
     }
+
+    public function authorized(): bool
+    {
+        return isset($_SESSION['user']);
+    }
 }

@@ -1,4 +1,4 @@
-.content {
+.content-block {
   padding: 5px 5px;
 }
 
@@ -9,10 +9,6 @@
 
 #submit {
   margin-top: 5px;
-}
-
-#preview {
-  border: 2px solid #7abaff;
 }
 
 #preview-button {

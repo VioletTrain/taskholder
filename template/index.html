@@ -5,11 +5,11 @@
     <link rel="stylesheet" href="/public/css/bootstrap.min.css">
     <link rel="stylesheet" href="/public/css/main.css">
     <script src="/public/js/main.js" type="module"></script>
-    <title>Title</title>
+    <title>Taskholder</title>
 </head>
 <body>
 <div class="container-fluid">
-    <div class="row content">
+    <div class="row content-block">
         <div class="col-md-3">
             <button id="create-task">Create task</button>
             <div id="inputs">
@@ -38,20 +38,25 @@
                 <a href="/">Reset</a>
             </p>
             <div class="row" id="tasks">
-                {% for task in tasks.data %}
-                    <div class="col-md-4 task">
-                        <p>Username: <span class="username">{{ task.getUsername() }}</span>
-                            {% if task.isCompleted() %}
-                                <span class="done">✅ DONE</span>
-                            {% endif %}
-                        </p>
-                        <p>Email: <span class="email">{{ task.getEmail() }}</span></p>
-                        <p>Content: <span class="content">{{ task.getContent() }}</span></p>
-                        {% if task.getImgPath() != '' %}
-                            <img class="image" src="/storage/img/{{ task.getImgPath() }}" alt="task-image">
+            {% for task in tasks.data %}
+                <div class="col-md-4 task">
+                    <p>Username: <span class="username">{{ task.getUsername() }}</span>
+                    {% if task.isCompleted() %}
+                        <span class="done">✅ DONE</span>
+                    {% endif %}
+                    </p>
+                    <p>Email: <span class="email">{{ task.getEmail() }}</span></p>
+                    <p>
+                        Content: <span class="content">{{ task.getContent() }}</span>
+                        {% if (authorized) %}
+                        <button class="edit-button" id="{{ task.getId() }}">Edit</button>
                         {% endif %}
-                    </div>
-                {% endfor %}
+                    </p>
+                {% if task.getImgPath() != '' %}
+                    <img class="image" src="/storage/img/{{ task.getImgPath() }}" alt="task-image">
+                {% endif %}
+                </div>
+            {% endfor %}
             </div>
             <div class="pagination-links">
                 <a class="pagination-link" href="/?current_page=1"><<</a>
@@ -77,5 +82,8 @@
         </div>
     </div>
 </div>
+{% if (authorized) %}
+<script src="/public/js/admin.js"></script>
+{% endif %}
 </body>
 </html>
